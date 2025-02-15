@@ -1,0 +1,37 @@
+{
+  "name": "유아루 채널포인트 확장",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "치지직 스트리밍 서비스와 유아루 채널포인트를 연동해주는 확장 프로그램",
+  "host_permissions": [
+    "https://comm-api.game.naver.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chzzk.naver.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "permissions": ["scripting", "storage", "activeTab"],
+  "web_accessible_resources": [
+    {
+      "resources": ["point-icon.svg"],
+      "matches": ["https://chzzk.naver.com/*"]
+    }
+  ]
+}
