@@ -2,19 +2,79 @@ let popup; // 팝업 요소를 저장할 변수
 let channelPoints = 0;
 let rewards = [];
 let broadcastUid;
+let streamerList = [];
+let chatChannelId;
+
+async function fetchchatChannelId() {
+  await fetch(`https://api.chzzk.naver.com/polling/v3/channels/${broadcastUid}/live-status`, { method: "GET", credentials: "include", })
+    .then((response) => response.json())
+    .then((data) => {
+      chatChannelId = data.content.chatChannelId;
+      console.log(chatChannelId)
+      return chatChannelId;
+    })
+}
+
+async function isBan() {
+  try {
+    const response = await fetch(`https://comm-api.game.naver.com/nng_main/v1/chats/access-token?channelId=${chatChannelId}&chatType=STREAMING`, { method: "GET", credentials: "include", });
+    const data = await response.json();
+    console.log(data)
+    
+    if (data.code !== 200) {
+      alert("해당 스트리머에게 차단당하셨습니다.");
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:", error);
+    return false; // 오류 발생 시 기본적으로 차단된 것으로 처리
+  }
+}
+
+async function fetchStreamerList() {
+  await fetch("https://raw.githubusercontent.com/mynam333/channelpoint/refs/heads/main/streamerSockets.json", { method: "GET", })
+    .then((response) => response.json())
+    .then((data) => {
+      streamerList = Object.keys(data);
+      checkBroadcastUid();
+    })
+}
+fetchStreamerList();
+
+// 메시지를 보낼 때 오류 확인
+async function safeSendMessage(message) {
+  return new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage(message, (response) => {
+      if (chrome.runtime.lastError) {
+        console.error("🚨 메시지 전송 오류:", chrome.runtime.lastError);
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(response);
+      }
+    });
+  });
+}
+
+function waitForElement(selector, callback) {
+  const observer = new MutationObserver(() => {
+    const element = document.getElementById(selector);
+    if (element) {
+      observer.disconnect(); // 요소가 발견되면 감시 중지
+      callback(element);
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+}
 
 // 버튼 추가 함수
 function addButton() {
   if (document.getElementById("yuaru-channelpoint")) return; // 중복 추가 방지
 
-  const targetElement = document.getElementById("aside-chatting");
+  waitForElement("aside-chatting", (targetElement) => {
 
-  console.log(targetElement)
-
-  if (targetElement) {
     const button = document.createElement("button");
-    // 확장 프로그램 리소스 경로 가져오기
-    const iconUrl = chrome.runtime.getURL("point-icon.svg");
     button.id = "yuaru-channelpoint";
     button.textContent = "채널포인트";
     button.style.position = "fixed";
@@ -34,12 +94,24 @@ function addButton() {
     button.addEventListener("click", togglePopup);
 
     targetElement.appendChild(button);
+
+    chrome.runtime.sendMessage({ type: "start_websockets", streamerUUID: broadcastUid });
+  });
+}
+
+// 버튼 삭제 함수
+function removeButton() {
+  const button = document.getElementById("yuaru-channelpoint");
+  if (button) {
+    button.remove();
   }
 }
 
 // 팝업 추가 함수
 function createPopup() {
   if (document.getElementById("channelpoint-popup")) return; // 중복 생성 방지
+
+  const targetElement = document.getElementById("aside-chatting");
 
   popup = document.createElement("div");
   popup.id = "channelpoint-popup";
@@ -89,7 +161,7 @@ function createPopup() {
   rewardsContainer.style.display = "grid";
   rewardsContainer.style.gridTemplateColumns = "repeat(3, 1fr)"; // 한 줄에 3개씩 배치
   rewardsContainer.style.gap = "10px"; // 버튼 간격 추가
-  rewardsContainer.style.marginTop = "40px";
+  rewardsContainer.style.marginTop = "10px";
 
   // 입력창 추가 (팝업 하단)
   const inputField = document.createElement("input");
@@ -98,70 +170,73 @@ function createPopup() {
   inputField.placeholder = "입력하세요...";
   inputField.style.width = "100%";
   inputField.style.padding = "10px";
-  inputField.style.marginTop = "15px";
+  inputField.style.marginTop = "30px";
   inputField.style.border = "1px solid #ccc";
   inputField.style.borderRadius = "5px";
 
   popup.appendChild(closeButton);
   popup.appendChild(pointsContainer);
-  popup.appendChild(rewardsContainer);
   popup.appendChild(inputField);
-  document.body.appendChild(popup);
+  popup.appendChild(rewardsContainer);
+  targetElement.appendChild(popup);
 }
 
 // 팝업 열기/닫기 + 보상 요청
-function togglePopup() {
+async function togglePopup() {
   if (!popup) {
     createPopup();
+    chrome.runtime.sendMessage({ type: "start_websockets", streamerUUID: broadcastUid });
   }
 
   if (popup.style.display === "none") {
     popup.style.display = "block";
 
-    // 팝업이 열릴 때마다 백그라운드에 웹소켓 요청
-    chrome.runtime.sendMessage({ type: "request_channel_points", streamerUUID: broadcastUid }, (response) => {
-      if (response && response.points !== undefined) {
-        channelPoints = response.points;
-        console.log("백그라운드에서 받은 채널 포인트:", channelPoints);
-
-        // UI 업데이트
-        const pointsDisplay = document.getElementById("channel-points-display");
-        if (pointsDisplay) {
-          pointsDisplay.textContent = `채널 포인트: ${channelPoints}`;
-        }
+    try {
+      // 채널 포인트 요청을 비동기 처리
+      const responsePoints = await safeSendMessage({ type: "request_channel_points", streamerUUID: broadcastUid });
+      if (responsePoints && responsePoints.points !== undefined) {
+        channelPoints = responsePoints.points;
+        console.log("✅ 백그라운드에서 받은 채널 포인트:", channelPoints);
+        document.getElementById("channel-points-display").textContent = `채널 포인트: ${channelPoints}`;
       }
-    });
 
-    // 팝업 열릴 때 백그라운드에서 보상 데이터 요청
-    chrome.runtime.sendMessage({ type: "request_rewards", streamerUUID: broadcastUid }, (response) => {
-      if (response && response.rewards) {
-        rewards = response.rewards;
-        console.log("백그라운드에서 받은 보상 리스트:", rewards);
-
-        // UI 업데이트
+      // 보상 목록 요청을 비동기 처리
+      const responseRewards = await safeSendMessage({ type: "request_rewards", streamerUUID: broadcastUid });
+      if (responseRewards && responseRewards.rewards) {
+        rewards = responseRewards.rewards;
+        console.log("✅ 백그라운드에서 받은 보상 리스트:", rewards);
         updateRewardsUI();
       }
-    });
+    } catch (error) {
+      console.error("🚨 메시지 요청 중 오류 발생:", error);
+    }
   } else {
     popup.style.display = "none";
   }
 }
 
-// 보상 버튼을 생성하는 함수
+// 보상 버튼을 생성하는 함수 (수정)
 function updateRewardsUI() {
   const rewardsContainer = document.getElementById("rewards-container");
   if (!rewardsContainer) return;
 
   rewardsContainer.innerHTML = ""; // 기존 버튼 삭제 후 새로 추가
 
-  rewards.forEach((reward) => {
+  // 보상이 객체가 아닐 경우 예외 처리
+  if (typeof rewards !== "object" || rewards === null) {
+    console.error("보상 목록이 객체가 아닙니다:", rewards);
+    return;
+  }
+
+  // 객체의 키-값 쌍을 순회하며 버튼 생성
+  Object.entries(rewards).forEach(([rewardName, rewardPoints]) => {
     const rewardButton = document.createElement("button");
 
     // 보상 버튼 스타일
     rewardButton.style.padding = "10px";
     rewardButton.style.border = "1px solid #ccc";
     rewardButton.style.borderRadius = "5px";
-    rewardButton.style.backgroundColor = "#007BFF";
+    rewardButton.style.backgroundColor = "rgb(31, 30, 37)";
     rewardButton.style.color = "white";
     rewardButton.style.cursor = "pointer";
     rewardButton.style.width = "100%";
@@ -171,34 +246,30 @@ function updateRewardsUI() {
 
     // 이름 요소 추가
     const nameSpan = document.createElement("span");
-    nameSpan.textContent = reward.이름;
+    nameSpan.textContent = rewardPoints.이름; // 객체 키를 보상 이름으로 사용
     nameSpan.style.fontWeight = "bold";
     nameSpan.style.fontSize = "14px";
 
     // 포인트 요소 추가
     const pointsSpan = document.createElement("span");
-    pointsSpan.textContent = `${reward.포인트} 포인트`;
+    pointsSpan.textContent = `${rewardPoints.포인트} 포인트`; // 객체 값(포인트)를 보상 포인트로 사용
     pointsSpan.style.fontSize = "12px";
     pointsSpan.style.opacity = "0.8";
 
     // 클릭 이벤트 추가
-    rewardButton.addEventListener("click", () => {
+    rewardButton.addEventListener("click", async () => {
       const inputField = document.getElementById("reward-input");
-      const inputValue = inputField.value.trim(); // 입력된 값 가져오기
+      if (await isBan()) {
+        const inputValue = inputField.value.trim(); // 입력된 값 가져오기
 
-      // 입력값과 함께 보상 요청 보내기
-      chrome.runtime.sendMessage({
-        type: "redeem_reward",
-        streamerUUID: broadcastUid,
-        rewardName: reward.이름,
-        rewardPoints: reward.포인트,
-        inputValue: inputValue
-      });
+        // 입력값과 함께 보상 요청 보내기
+        chrome.runtime.sendMessage({ type: "redeem_reward", streamerUUID: broadcastUid, rewardPoints: rewardPoints, inputValue: inputValue });
 
-      alert(`${reward.이름} 사용됨! (${inputValue})`);
-
+        alert(`${rewardPoints.이름} 사용됨! (${inputValue})`);
+      }
       // 입력창 비우기
       inputField.value = "";
+      togglePopup(); // 팝업 닫기
     });
 
     rewardButton.appendChild(nameSpan);
@@ -217,61 +288,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
-monitorUrlChanges()
+let lastUrl = location.href;
 
-function monitorUrlChanges() {
-  const observeUrlChange = (path) => {
-    handlePathChange(path); // URL이 변경될 때 실행할 로직
-  };
-
-  // 현재 로드된 URL 처리
-  if (location.pathname) {
-    observeUrlChange(location.pathname);
-  } else {
-    console.error('Invalid location.pathname detected.');
+new MutationObserver(() => {
+  if (location.href !== lastUrl) {
+    lastUrl = location.href;
+    checkBroadcastUid();
   }
+}).observe(document, { subtree: true, childList: true });
 
-  // 원래 history 메서드를 저장
-  const originalPushState = history.pushState;
-  const originalReplaceState = history.replaceState;
-
-  // history.pushState 가로채기
-  history.pushState = function (...args) {
-    originalPushState.apply(this, args); // 원래 동작 수행
-    observeUrlChange(location.pathname); // URL 변경 감지
-  };
-
-  // history.replaceState 가로채기
-  history.replaceState = function (...args) {
-    originalReplaceState.apply(this, args); // 원래 동작 수행
-    observeUrlChange(location.pathname); // URL 변경 감지
-  };
-
-  // popstate 이벤트 감지
-  window.addEventListener("popstate", () => {
-    observeUrlChange(location.pathname); // URL 변경 감지
-  });
-}
-
-// 방송 UID를 추출하고 처리하는 함수
-function handlePathChange(path) {
-  console.log("현재 path:", path);
-
-  // "/live/" 뒤의 UID 추출
-  const livePathMatch = path.match(/^\/live\/([^/]+)/);
+function checkBroadcastUid() {
+  const livePathMatch = location.pathname.match(/^\/live\/([^/]+)/);
   if (livePathMatch) {
     broadcastUid = livePathMatch[1];
     console.log("방송 UID 감지:", broadcastUid);
-    if (broadcastUid === "6d395c84c99777272f872171b4dfc122") {
+    if (streamerList.includes(broadcastUid)) {
+      fetchchatChannelId();
       addButton();
-
-      // `MutationObserver`를 사용해서 DOM 변경 감지
-      const observer = new MutationObserver(() => {
-        addButton();
-      });
-
-      // 감시할 대상: `body` (전체 페이지 변경 감지)
-      observer.observe(document.body, { childList: true, subtree: true });
+    } else {
+      removeButton();
     }
   }
 }
