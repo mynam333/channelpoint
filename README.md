@@ -3,7 +3,11 @@
 채팅창을 이용해 채널포인트를 적립, 사용할 수 있습니다. 
 
 확장 프로그램을 통해 ui로 사용하실 수 있습니다. 
-(현재 검토중인 사안입니다.)
+
+[<img src="https://github.com/user-attachments/assets/c3a90776-a208-46a3-b67f-866a5996d785" height="50"/>](https://chromewebstore.google.com/detail/유아루-채널포인트-확장/dmgdnjojiaiccccioggkgkkpnoahbiag)
+[<img src="https://github.com/user-attachments/assets/d12acf9d-c07f-4dfe-96c9-687f32d40a90" height="50"/>](https://addons.mozilla.org/ko/firefox/addon/%EC%9C%A0%EC%95%84%EB%A3%A8-%EC%B1%84%EB%84%90%ED%8F%AC%EC%9D%B8%ED%8A%B8-%ED%99%95%EC%9E%A5/)
+
+
 
 제작 문의: https://open.kakao.com/me/yuaru
 
