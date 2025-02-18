@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gupdate xmlns="http://www.google.com/update2/response" protocol="2.0">
+    <app appid="mnmhjacfcnoalcdmbpklnmbonaplhjom">
+        <updatecheck codebase="https://github.com/mynam333/channelpoint/raw/refs/heads/main/크롬%20확장프로그램%20배포/유아루%20채널포인트%20확장프로그램.crx" version="1.0.1" />
+    </app>
+</gupdate>

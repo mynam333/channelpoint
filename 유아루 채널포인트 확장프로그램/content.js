@@ -185,11 +185,11 @@ function createPopup() {
 async function togglePopup() {
   if (!popup) {
     createPopup();
-    chrome.runtime.sendMessage({ type: "start_websockets", streamerUUID: broadcastUid });
   }
 
   if (popup.style.display === "none") {
     popup.style.display = "block";
+    chrome.runtime.sendMessage({ type: "start_websockets", streamerUUID: broadcastUid });
 
     try {
       // 채널 포인트 요청을 비동기 처리
