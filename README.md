@@ -30,6 +30,8 @@
 
 도도리코 (https://chzzk.naver.com/d676df6bcb09c553c26a2e2b92542fd6)
 
+쁘밍 (https://chzzk.naver.com/0537e132c47b6d4fa46650e30ba39d4a)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
