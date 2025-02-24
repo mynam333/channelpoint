@@ -32,6 +32,8 @@
 
 쁘밍 (https://chzzk.naver.com/0537e132c47b6d4fa46650e30ba39d4a)
 
+무츠키쨩 (https://chzzk.naver.com/61ca8b9ffd80dc8e529148734f9352da)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
