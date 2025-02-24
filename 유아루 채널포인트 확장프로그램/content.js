@@ -20,7 +20,7 @@ async function isBan() {
     const response = await fetch(`https://comm-api.game.naver.com/nng_main/v1/chats/access-token?channelId=${chatChannelId}&chatType=STREAMING`, { method: "GET", credentials: "include", });
     const data = await response.json();
     console.log(data)
-    
+
     if (data.code !== 200) {
       alert("해당 스트리머에게 차단당하셨습니다.");
       return false;
@@ -167,12 +167,17 @@ function createPopup() {
   const inputField = document.createElement("input");
   inputField.id = "reward-input";
   inputField.type = "text";
-  inputField.placeholder = "입력하세요...";
+  inputField.placeholder = "검색창";
   inputField.style.width = "100%";
   inputField.style.padding = "10px";
   inputField.style.marginTop = "30px";
   inputField.style.border = "1px solid #ccc";
   inputField.style.borderRadius = "5px";
+
+  // 검색 이벤트 리스너 추가
+  inputField.addEventListener("input", () => {
+    updateRewardsUI(inputField.value.trim().toLowerCase());
+  });
 
   popup.appendChild(closeButton);
   popup.appendChild(pointsContainer);
@@ -181,11 +186,81 @@ function createPopup() {
   targetElement.appendChild(popup);
 }
 
+function updateRewardsUI(searchQuery = "") {
+  const rewardsContainer = document.getElementById("rewards-container");
+  if (!rewardsContainer) return;
+
+  rewardsContainer.innerHTML = ""; // 기존 버튼 삭제 후 새로 추가
+
+  if (typeof rewards !== "object" || rewards === null) {
+    console.error("보상 목록이 객체가 아닙니다:", rewards);
+    return;
+  }
+
+  Object.entries(rewards).forEach(([rewardName, rewardPoints]) => {
+    // 입력값과 비교하여 필터링
+    if (searchQuery && !rewardPoints.이름.toLowerCase().includes(searchQuery)) {
+      return; // 검색어와 일치하지 않으면 건너뜀
+    }
+
+    const rewardButton = document.createElement("button");
+
+    rewardButton.style.padding = "10px";
+    rewardButton.style.border = "1px solid #ccc";
+    rewardButton.style.borderRadius = "5px";
+    rewardButton.style.backgroundColor = "rgb(31, 30, 37)";
+    rewardButton.style.color = "white";
+    rewardButton.style.cursor = "pointer";
+    rewardButton.style.width = "100%";
+    rewardButton.style.display = "flex";
+    rewardButton.style.flexDirection = "column";
+    rewardButton.style.alignItems = "center";
+
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = rewardPoints.이름;
+    nameSpan.style.fontWeight = "bold";
+    nameSpan.style.fontSize = "14px";
+
+    const pointsSpan = document.createElement("span");
+    pointsSpan.textContent = `${rewardPoints.포인트} 포인트`;
+    pointsSpan.style.fontSize = "12px";
+    pointsSpan.style.opacity = "0.8";
+
+    // 클릭 이벤트 추가
+    rewardButton.addEventListener("click", async () => {
+      if (await isBan()) {
+        // 입력 알림창 표시
+        const inputValue = prompt(`${rewardPoints.이름} 뒤에 올 인자를 입력하세요:`, "");
+
+        if (inputValue !== null) { // 취소 버튼을 누른 경우 무시
+          // 입력값과 함께 보상 요청 보내기
+          chrome.runtime.sendMessage({
+            type: "redeem_reward",
+            streamerUUID: broadcastUid,
+            rewardPoints: rewardPoints,
+            inputValue: inputValue.trim()
+          });
+
+          alert(`${rewardPoints.이름} 사용됨! (${inputValue.trim()})`);
+        } else {
+          alert("취소되었습니다.");
+        }
+      }
+      togglePopup(); // 팝업 닫기
+    });
+
+    rewardButton.appendChild(nameSpan);
+    rewardButton.appendChild(pointsSpan);
+    rewardsContainer.appendChild(rewardButton);
+  });
+}
+
 // 팝업 열기/닫기 + 보상 요청
 async function togglePopup() {
   if (!popup) {
     createPopup();
   }
+  const inputField = document.getElementById("reward-input");
 
   if (popup.style.display === "none") {
     popup.style.display = "block";
@@ -212,70 +287,8 @@ async function togglePopup() {
     }
   } else {
     popup.style.display = "none";
+    inputField.value = ""; // 팝업이 닫힐 때 입력창 초기화
   }
-}
-
-// 보상 버튼을 생성하는 함수 (수정)
-function updateRewardsUI() {
-  const rewardsContainer = document.getElementById("rewards-container");
-  if (!rewardsContainer) return;
-
-  rewardsContainer.innerHTML = ""; // 기존 버튼 삭제 후 새로 추가
-
-  // 보상이 객체가 아닐 경우 예외 처리
-  if (typeof rewards !== "object" || rewards === null) {
-    console.error("보상 목록이 객체가 아닙니다:", rewards);
-    return;
-  }
-
-  // 객체의 키-값 쌍을 순회하며 버튼 생성
-  Object.entries(rewards).forEach(([rewardName, rewardPoints]) => {
-    const rewardButton = document.createElement("button");
-
-    // 보상 버튼 스타일
-    rewardButton.style.padding = "10px";
-    rewardButton.style.border = "1px solid #ccc";
-    rewardButton.style.borderRadius = "5px";
-    rewardButton.style.backgroundColor = "rgb(31, 30, 37)";
-    rewardButton.style.color = "white";
-    rewardButton.style.cursor = "pointer";
-    rewardButton.style.width = "100%";
-    rewardButton.style.display = "flex";
-    rewardButton.style.flexDirection = "column"; // 줄바꿈
-    rewardButton.style.alignItems = "center";
-
-    // 이름 요소 추가
-    const nameSpan = document.createElement("span");
-    nameSpan.textContent = rewardPoints.이름; // 객체 키를 보상 이름으로 사용
-    nameSpan.style.fontWeight = "bold";
-    nameSpan.style.fontSize = "14px";
-
-    // 포인트 요소 추가
-    const pointsSpan = document.createElement("span");
-    pointsSpan.textContent = `${rewardPoints.포인트} 포인트`; // 객체 값(포인트)를 보상 포인트로 사용
-    pointsSpan.style.fontSize = "12px";
-    pointsSpan.style.opacity = "0.8";
-
-    // 클릭 이벤트 추가
-    rewardButton.addEventListener("click", async () => {
-      const inputField = document.getElementById("reward-input");
-      if (await isBan()) {
-        const inputValue = inputField.value.trim(); // 입력된 값 가져오기
-
-        // 입력값과 함께 보상 요청 보내기
-        chrome.runtime.sendMessage({ type: "redeem_reward", streamerUUID: broadcastUid, rewardPoints: rewardPoints, inputValue: inputValue });
-
-        alert(`${rewardPoints.이름} 사용됨! (${inputValue})`);
-      }
-      // 입력창 비우기
-      inputField.value = "";
-      togglePopup(); // 팝업 닫기
-    });
-
-    rewardButton.appendChild(nameSpan);
-    rewardButton.appendChild(pointsSpan);
-    rewardsContainer.appendChild(rewardButton);
-  });
 }
 
 // 백그라운드에서 실시간 보상 업데이트 받기
