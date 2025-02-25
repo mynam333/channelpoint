@@ -1,0 +1,26 @@
+{
+  "name": "channelpoint",
+  "version": "1.0.0",
+  "description": "치지직의 채널포인트를 만들어드립니다. \r 채팅창을 이용해 채널포인트를 적립, 사용할 수 있습니다.",
+  "main": "socketserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node socketserver.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mynam333/channelpoint.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mynam333/channelpoint/issues"
+  },
+  "homepage": "https://github.com/mynam333/channelpoint#readme",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "express": "^4.21.2",
+    "fs": "^0.0.1-security",
+    "json-server": "^1.0.0-beta.3"
+  }
+}
