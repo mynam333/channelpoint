@@ -34,6 +34,8 @@
 
 무츠키쨩 (https://chzzk.naver.com/61ca8b9ffd80dc8e529148734f9352da)
 
+쵸요링 (https://chzzk.naver.com/e008490d3464797704feac3b9ad8fe67)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
@@ -57,3 +59,5 @@
 유토링 (https://chzzk.naver.com/105c19a2df33594abc805087f483eb1f)
 
 도도리코 (https://chzzk.naver.com/d676df6bcb09c553c26a2e2b92542fd6)
+
+쵸요링 (https://chzzk.naver.com/e008490d3464797704feac3b9ad8fe67)
