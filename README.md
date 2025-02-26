@@ -36,6 +36,8 @@
 
 쵸요링 (https://chzzk.naver.com/e008490d3464797704feac3b9ad8fe67)
 
+996 (https://chzzk.naver.com/1d0aeb29fcd935bb05aa9aff71862cfa)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
@@ -61,3 +63,5 @@
 도도리코 (https://chzzk.naver.com/d676df6bcb09c553c26a2e2b92542fd6)
 
 쵸요링 (https://chzzk.naver.com/e008490d3464797704feac3b9ad8fe67)
+
+996 (https://chzzk.naver.com/1d0aeb29fcd935bb05aa9aff71862cfa)
