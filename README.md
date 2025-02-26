@@ -38,6 +38,8 @@
 
 996 (https://chzzk.naver.com/1d0aeb29fcd935bb05aa9aff71862cfa)
 
+유유아 (https://chzzk.naver.com/f8fa2d116cb2693b8db8b8c793daba0e)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
@@ -65,3 +67,5 @@
 쵸요링 (https://chzzk.naver.com/e008490d3464797704feac3b9ad8fe67)
 
 996 (https://chzzk.naver.com/1d0aeb29fcd935bb05aa9aff71862cfa)
+
+유유아 (https://chzzk.naver.com/f8fa2d116cb2693b8db8b8c793daba0e)
