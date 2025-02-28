@@ -40,6 +40,8 @@
 
 유유아 (https://chzzk.naver.com/f8fa2d116cb2693b8db8b8c793daba0e)
 
+묘야 (https://chzzk.naver.com/0a0e445e35e8b385f8e8839c78488a28)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
@@ -69,3 +71,5 @@
 996 (https://chzzk.naver.com/1d0aeb29fcd935bb05aa9aff71862cfa)
 
 유유아 (https://chzzk.naver.com/f8fa2d116cb2693b8db8b8c793daba0e)
+
+묘야 (https://chzzk.naver.com/0a0e445e35e8b385f8e8839c78488a28)
