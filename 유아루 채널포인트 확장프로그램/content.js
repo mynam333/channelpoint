@@ -230,7 +230,7 @@ function updateRewardsUI(searchQuery = "") {
     rewardButton.addEventListener("click", async () => {
       if (await isBan()) {
         // 입력 알림창 표시
-        const inputValue = prompt(`${rewardPoints.이름} 뒤에 올 인자를 입력하세요:`, "");
+        const inputValue = prompt(`${rewardPoints.이름} 뒤에 올 인자를 입력하세요.\n명령어 뒤에 넣을 메세지가 없는 항목이라면 바로 확인 버튼을 눌러주세요.`, "");
 
         if (inputValue !== null) { // 취소 버튼을 누른 경우 무시
           // 입력값과 함께 보상 요청 보내기
