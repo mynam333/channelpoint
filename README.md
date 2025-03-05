@@ -44,6 +44,8 @@
 
 카치아 (https://chzzk.naver.com/3f1829fda96ca0809109b1a0f5ad852d)
 
+하이티 (https://chzzk.naver.com/2a8a9e0fa887692abc0042f02ee97cb9)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
@@ -77,3 +79,5 @@
 묘야 (https://chzzk.naver.com/0a0e445e35e8b385f8e8839c78488a28)
 
 카치아 (https://chzzk.naver.com/3f1829fda96ca0809109b1a0f5ad852d)
+
+하이티 (https://chzzk.naver.com/2a8a9e0fa887692abc0042f02ee97cb9)
