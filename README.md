@@ -48,6 +48,8 @@
 
 얀즈 (https://chzzk.naver.com/0be2463dd64b33d112655a76cf6be7ea)
 
+수녕 (https://chzzk.naver.com/df4eb2d62da0a45ef8b37b5948126fcb)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
@@ -85,3 +87,5 @@
 하이티 (https://chzzk.naver.com/2a8a9e0fa887692abc0042f02ee97cb9)
 
 얀즈 (https://chzzk.naver.com/0be2463dd64b33d112655a76cf6be7ea)
+
+수녕 (https://chzzk.naver.com/df4eb2d62da0a45ef8b37b5948126fcb)
