@@ -50,6 +50,8 @@
 
 수녕 (https://chzzk.naver.com/df4eb2d62da0a45ef8b37b5948126fcb)
 
+김개미 방송중 (https://chzzk.naver.com/b952688d9f018ef9dc4fb23b5953f992)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
@@ -89,3 +91,5 @@
 얀즈 (https://chzzk.naver.com/0be2463dd64b33d112655a76cf6be7ea)
 
 수녕 (https://chzzk.naver.com/df4eb2d62da0a45ef8b37b5948126fcb)
+
+김개미 방송중 (https://chzzk.naver.com/b952688d9f018ef9dc4fb23b5953f992)
