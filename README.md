@@ -52,6 +52,8 @@
 
 김개미 방송중 (https://chzzk.naver.com/b952688d9f018ef9dc4fb23b5953f992)
 
+깜장냥말 (https://chzzk.naver.com/9e9bc0f007b5c9526dad4a8024bfbbc5)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
@@ -93,3 +95,5 @@
 수녕 (https://chzzk.naver.com/df4eb2d62da0a45ef8b37b5948126fcb)
 
 김개미 방송중 (https://chzzk.naver.com/b952688d9f018ef9dc4fb23b5953f992)
+
+깜장냥말 (https://chzzk.naver.com/9e9bc0f007b5c9526dad4a8024bfbbc5)
