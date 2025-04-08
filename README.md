@@ -58,6 +58,8 @@
 
 차홍시 (https://chzzk.naver.com/228635ece8aa1e416b854f4124239462)
 
+무묭A (https://chzzk.naver.com/ae601a5619064bbe35bca3fadae9863a)
+
 
 ## 채널포인트 사용자
 유아루 (https://chzzk.naver.com/6d395c84c99777272f872171b4dfc122)
@@ -105,3 +107,5 @@
 피언 (https://chzzk.naver.com/a7ec7b6e3605fd34436ddd30cbe1a17e)
 
 차홍시 (https://chzzk.naver.com/228635ece8aa1e416b854f4124239462)
+
+무묭A (https://chzzk.naver.com/ae601a5619064bbe35bca3fadae9863a)
