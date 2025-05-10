@@ -61,3 +61,5 @@
 무묭A (https://chzzk.naver.com/ae601a5619064bbe35bca3fadae9863a)
 
 아카네 리제 (https://chzzk.naver.com/4325b1d5bbc321fad3042306646e2e50)
+
+유메카와 토아 (https://chzzk.naver.com/live/8818dabe7e7882dadb905813f326bc85)
