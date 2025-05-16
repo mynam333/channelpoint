@@ -65,3 +65,5 @@
 유메카와 토아 (https://chzzk.naver.com/live/8818dabe7e7882dadb905813f326bc85)
 
 코모리 (https://chzzk.naver.com/1d2464b7d15ec46eb0016325899cde10)
+
+코하네 (https://chzzk.naver.com/d20946e7c0c08fa8c31392762383c955)
