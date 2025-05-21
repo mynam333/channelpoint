@@ -67,3 +67,7 @@
 코모리 (https://chzzk.naver.com/1d2464b7d15ec46eb0016325899cde10)
 
 코하네 (https://chzzk.naver.com/d20946e7c0c08fa8c31392762383c955)
+
+시라유키 히나 (https://chzzk.naver.com/b044e3a3b9259246bc92e863e7d3f3b8)
+
+져미님 (https://chzzk.naver.com/75c30c411b840b8eeaa12ce3401e6d5f)
