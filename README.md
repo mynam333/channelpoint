@@ -72,6 +72,6 @@
 
 져미님 (https://chzzk.naver.com/75c30c411b840b8eeaa12ce3401e6d5f)
 
-아키즈키 노아님 (https://chzzk.naver.com/1b7263344f2fb5f0713832e670fb9c39)
+아키즈키 노아 (https://chzzk.naver.com/1b7263344f2fb5f0713832e670fb9c39)
 
-노랑새k님 (https://chzzk.naver.com/f11fe3d49f587cffed1fefdde44fe041)
+노랑새k (https://chzzk.naver.com/f11fe3d49f587cffed1fefdde44fe041)
