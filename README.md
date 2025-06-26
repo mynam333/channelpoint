@@ -75,3 +75,5 @@
 아키즈키 노아 (https://chzzk.naver.com/1b7263344f2fb5f0713832e670fb9c39)
 
 노랑새k (https://chzzk.naver.com/f11fe3d49f587cffed1fefdde44fe041)
+
+쎄랑 (https://chzzk.naver.com/6d705e771d02e31473b84b3eb9988ec6)
